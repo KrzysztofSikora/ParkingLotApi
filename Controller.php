@@ -31,7 +31,7 @@ class Controller
                     $bus = new Bus($id);
                     $info = $bus->save();
                     break;
-                case 'Motorcycle':
+                case 'motorcycle':
                     $motorcycle = new Motorcycle($id);
                     $info = $motorcycle->save();
                     break;
