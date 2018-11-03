@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^(add-vehicle|remove|places|list|config)$ /index.php?method=$1 [L]
+
