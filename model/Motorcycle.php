@@ -1,10 +1,10 @@
 <?php
 
 
-class Motocycle extends Vehicle
+class Motorcycle extends Vehicle
 {
     private $numberOfWheels = 2;
-    private $model = "Motocycle";
+    private $model = "Motorcycle";
 
 
     public function __construct($id)

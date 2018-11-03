@@ -1,3 +1,3 @@
 <?php
 
-include ("kernel.php");
+include("kernel.php");

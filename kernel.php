@@ -1,15 +1,14 @@
 <?php
 
-include ("config.php");
+include("config.php");
 include("Controller.php");
 
-//
+
 $controller = new Controller();
 
 
 $data = json_decode( file_get_contents( 'php://input' ), true );
 $method = addslashes($_GET['method']);
-//var_dump($data);
 
 // routing
 

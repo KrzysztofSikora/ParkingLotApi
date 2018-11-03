@@ -1,11 +1,11 @@
 <?php
 
 
-include("Vehicle.php");
-include("Bus.php");
-include("Car.php");
-include("Parking.php");
-include("Motocycle.php");
+include("model/Vehicle.php");
+include("model/Bus.php");
+include("model/Car.php");
+include("model/Parking.php");
+include("model/Motorcycle.php");
 
 class Controller
 {
@@ -31,9 +31,9 @@ class Controller
                     $bus = new Bus($id);
                     $info = $bus->save();
                     break;
-                case 'motocycle':
-                    $motocycle = new Motocycle($id);
-                    $info = $motocycle->save();
+                case 'Motorcycle':
+                    $motorcycle = new Motorcycle($id);
+                    $info = $motorcycle->save();
                     break;
                 case 'car':
                     $car = new Car($id);
