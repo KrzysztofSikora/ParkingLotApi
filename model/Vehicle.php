@@ -49,6 +49,34 @@ class Vehicle
 
     }
 
+
+    public function existChecker($carId) {
+
+
+        $conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
+        // Check connection
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        $sql = "SELECT id FROM ParkingLot WHERE carId = $carId";
+
+
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                mysqli_close($conn);
+                return false;
+
+            }
+        }
+
+        mysqli_close($conn);
+        return true;
+    }
+
     public function fetch($sql) {
         // fetch to database
 

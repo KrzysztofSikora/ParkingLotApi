@@ -12,7 +12,6 @@ class Car extends Vehicle
 
         $this->setCarId($id);
 
-        // TODO: Implement __call() method.
     }
 
     public function save()
@@ -23,7 +22,12 @@ class Car extends Vehicle
 
         $sql = "INSERT INTO ParkingLot (`carId`, `type`, `wheels`) VALUES ($id,'" . $this->model . "', '" . $this->numberOfWheels . "')";
 
-        return $this->fetch($sql);
+        if($this->existChecker($id)) {
+            return $this->fetch($sql);
+        } else {
+            $status = "Car with this carId is parked. You can't duplicated";
+            return $status;
+        }
 
 
     }

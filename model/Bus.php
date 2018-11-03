@@ -18,8 +18,18 @@ class Bus extends Vehicle
         // save to database
         $id = $this->getCarId();
         // Create connection
+
+
         $sql = "INSERT INTO ParkingLot (`carId`, `type`, `wheels`) VALUES ($id,'" . $this->model . "', '" . $this->numberOfWheels . "')";
-        return $this->fetch($sql);
+
+        if($this->existChecker($id)) {
+            return $this->fetch($sql);
+        } else {
+            $status = "Car with this carId is parked. You can't duplicated";
+            return $status;
+        }
+
+
 
     }
 }
