@@ -4,28 +4,26 @@
 class Parking
 {
     private $numberOfPlaces;
+    private $conn;
+
 
 
     public function __construct()
     {
 
-        $conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
-        if (!$conn) {
+        $this->conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
+        if (!$this->conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
         $sql = "SELECT `id`, `places` FROM ParkingLotConfig";
 
-        $result = $conn->query($sql);
+        $result =  $this->conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-//                $this->numberOfPlaces-> $row['places'];
                 $this->setNumberOfPlaces($row['places']);
             }
         }
-
-        mysqli_close($conn);
-
 
     }
 
@@ -35,19 +33,18 @@ class Parking
 
         if ($numberOfPlaces > $this->freePlaces()) {
 
-            $conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
-            if (!$conn) {
+
+            if (! $this->conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
 
             $sql = "UPDATE ParkingLotConfig SET places = '$numberOfPlaces' WHERE id = 1";
 
-            if ($conn->query($sql) === TRUE) {
+            if ( $this->conn->query($sql) === TRUE) {
                 $status = "Config updated successfully. Place sets $numberOfPlaces";
             } else {
-                $status = "Error updating record: " . $conn->error;
+                $status = "Error updating record: " .  $this->conn->error;
             }
-            mysqli_close($conn);
 
         } else {
             $status = "You can not set a lower number of seats on the number of parked cars.";
@@ -62,14 +59,13 @@ class Parking
     public function freePlaces()
     {
 
-        $conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
-        if (!$conn) {
+        if (!$this->conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
         $sql = "SELECT count(id) FROM ParkingLot";
 
-        $result = $conn->query($sql);
+        $result = $this->conn->query($sql);
         $res = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -77,21 +73,18 @@ class Parking
             }
         }
 
-        mysqli_close($conn);
-
         return $res[0];
     }
 
     public function listParkedCar()
     {
-        $conn = mysqli_connect(HOSTNAME, USERNAME, PASSWORD, DATABASE);
-        if (!$conn) {
+        if (!$this->conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
 
         $sql = "SELECT `id`, `carId`, `type`, `wheels` FROM ParkingLot";
 
-        $result = $conn->query($sql);
+        $result = $this->conn->query($sql);
         $res = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -101,7 +94,6 @@ class Parking
             array_push($res, array("info" => "Parking lot is empty"));
         }
 
-        mysqli_close($conn);
 
         return $res;
     }
@@ -121,5 +113,7 @@ class Parking
     {
         $this->numberOfPlaces = $numberOfPlaces;
     }
-
+    public function ofConnection() {
+        mysqli_close($this->conn);
+    }
 }

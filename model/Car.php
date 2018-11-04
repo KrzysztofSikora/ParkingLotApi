@@ -9,6 +9,7 @@ class Car extends Vehicle
 
     public function __construct($id)
     {
+        parent::__construct();
 
         $this->setCarId($id);
 

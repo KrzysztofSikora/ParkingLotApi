@@ -12,10 +12,12 @@ class Controller
 
     private $lot;
     private $parkingLot;
+    private $vehicle;
 
     public function __construct()
     {
         $this->parkingLot = new Parking();
+        $this->vehicle = new Vehicle();
         $this->lot = $this->parkingLot->getNumberOfPlaces() - $this->parkingLot->freePlaces();
     }
 
@@ -54,8 +56,7 @@ class Controller
     public function actionRemoveCar($carId)
     {
 
-        $vehicle = new Vehicle();
-        $status = $vehicle->remove($carId);
+        $status = $this->vehicle->remove($carId);
 
         $info = Array("info" => $status);
 
@@ -87,5 +88,10 @@ class Controller
 
         return json_encode($status);
 
+    }
+
+    public function ofConnection() {
+        $this->vehicle->ofConnection();
+        $this->parkingLot->ofConnection();
     }
 }

@@ -9,6 +9,8 @@ class Bus extends Vehicle
 
     public function __construct($carId)
     {
+        parent::__construct();
+
         $this->setCarId($carId);
 
     }
@@ -17,7 +19,6 @@ class Bus extends Vehicle
     {
         // save to database
         $id = $this->getCarId();
-        // Create connection
 
 
         $sql = "INSERT INTO ParkingLot (`carId`, `type`, `wheels`) VALUES ($id,'" . $this->model . "', '" . $this->numberOfWheels . "')";
